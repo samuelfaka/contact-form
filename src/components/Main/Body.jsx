@@ -14,6 +14,7 @@ const Body = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false); // To handle form submission success
 
+  // Function to validate the form before submission
   const validateForm = () => {
     const newErrors = {};
 
@@ -48,13 +49,13 @@ const Body = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Show success message
-      setIsSubmitted(true);
+      setIsSubmitted(true); // Show success message
 
-      // Clear form data
+      // Clear form data after successful submission
       setFormData({
         firstName: '',
         lastName: '',
@@ -64,15 +65,24 @@ const Body = () => {
         consent: false,
       });
 
-      // Hide success message after 5 seconds
+      // Hide the success message after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
       }, 5000);
     }
   };
 
+  // Handle input changes and clear error when the user starts typing
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Reset errors for the specific field being updated
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: '',
+    }));
+
+    // Update form data based on input type
     setFormData({
       ...formData,
       [name]: type === 'checkbox' ? checked : value,
@@ -102,119 +112,119 @@ const Body = () => {
 
         <form onSubmit={handleSubmit}>
           <div className='many1'>
-          <div className='many'>
-            <h2 className='text'>Contact Us</h2>
+            <div className='many'>
+              <h2 className='text'>Contact Us</h2>
 
-            {/* First Name */}
-            <div className='input-box'>
-              <div className='all'>
-                <h1>First Name <span className='text-green-600'>*</span></h1>
-                <div className='name'>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                  />
-                  {errors.firstName && <p className='error-text'>{errors.firstName}</p>}
-                </div>
-              </div>
-
-              {/* Last Name */}
-              <div className='all'>
-                <h1>Last Name <span className='text-green-600'>*</span></h1>
-                <div className='name'>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                  />
-                  {errors.lastName && <p className='error-text'>{errors.lastName}</p>}
-                </div>
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className='input-Email'>
-              <div className='all'>
-                <h1>Email Address <span className='text-green-600'>*</span></h1>
-                <div className='nam'>
-                  <input
-                    className='na'
-                    type="text"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                  {errors.email && <p className='error-text'>{errors.email}</p>}
-                </div>
-              </div>
-            </div>
-
-            {/* Query Type */}
-            <div className='Query-box'>
-              <div className='all'>
-                <h1>Query Type <span className='text-green-600'>*</span></h1>
-                <div className='all1'>
-                  <div className='all2'>
+              {/* First Name */}
+              <div className='input-box'>
+                <div className='all'>
+                  <h1>First Name <span className='text-green-600'>*</span></h1>
+                  <div className='name'>
                     <input
-                      type="radio"
-                      name="queryType"
-                      value="General Enquiry"
-                      checked={formData.queryType === 'General Enquiry'}
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
                       onChange={handleChange}
                     />
-                    <h1>General Enquiry</h1>
-                  </div>
-                  <div className='all2'>
-                    <input
-                      type="radio"
-                      name="queryType"
-                      value="Specific Enquiry"
-                      checked={formData.queryType === 'Specific Enquiry'}
-                      onChange={handleChange}
-                    />
-                    <h1>Specific Enquiry</h1>
+                    {errors.firstName && <p className='error-text'>{errors.firstName}</p>}
                   </div>
                 </div>
-                {errors.queryType && <p className='error-text'>{errors.queryType}</p>}
-              </div>
-            </div>
 
-            {/* Message */}
-            <div className='all'>
-              <h1>Message <span className='text-green-600'>*</span></h1>
+                {/* Last Name */}
+                <div className='all'>
+                  <h1>Last Name <span className='text-green-600'>*</span></h1>
+                  <div className='name'>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                    />
+                    {errors.lastName && <p className='error-text'>{errors.lastName}</p>}
+                  </div>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className='input-Email'>
+                <div className='all'>
+                  <h1>Email Address <span className='text-green-600'>*</span></h1>
+                  <div className='nam'>
+                    <input
+                      className='na'
+                      type="text"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <p className='error-text'>{errors.email}</p>}
+                  </div>
+                </div>
+              </div>
+
+              {/* Query Type */}
+              <div className='Query-box'>
+                <div className='all'>
+                  <h1>Query Type <span className='text-green-600'>*</span></h1>
+                  <div className='all1'>
+                    <div className='all2'>
+                      <input
+                        type="radio"
+                        name="queryType"
+                        value="General Enquiry"
+                        checked={formData.queryType === 'General Enquiry'}
+                        onChange={handleChange}
+                      />
+                      <h1>General Enquiry</h1>
+                    </div>
+                    <div className='all2'>
+                      <input
+                        type="radio"
+                        name="queryType"
+                        value="Specific Enquiry"
+                        checked={formData.queryType === 'Specific Enquiry'}
+                        onChange={handleChange}
+                      />
+                      <h1>Specific Enquiry</h1>
+                    </div>
+                  </div>
+                  {errors.queryType && <p className='error-text'>{errors.queryType}</p>}
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className='all'>
+                <h1>Message <span className='text-green-600'>*</span></h1>
+                <div>
+                  <textarea
+                    className='larger'
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
+                  {errors.message && <p className='error-text'>{errors.message}</p>}
+                </div>
+              </div>
+
+              {/* Consent */}
               <div>
-                <textarea
-                  className='larger'
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                />
-                {errors.message && <p className='error-text'>{errors.message}</p>}
+                <div className='both'>
+                  <input
+                    type="checkbox"
+                    name="consent"
+                    checked={formData.consent}
+                    onChange={handleChange}
+                  />
+                  <p className='hover:text-green-200'>I consent to being contacted by the team <span className='text-green-600'>*</span></p>
+                </div>
+                {errors.consent && <p className='error-text'>{errors.consent}</p>}
+              </div>
+
+              {/* Submit Button */}
+              <div>
+                <button className='btn' type="submit">Submit</button>
               </div>
             </div>
-
-            {/* Consent */}
-            <div>
-              <div className='both'>
-                <input
-                  type="checkbox"
-                  name="consent"
-                  checked={formData.consent}
-                  onChange={handleChange}
-                />
-                <p className='hover:text-green-200'>I consent to being contacted by the team <span className='text-green-600'>*</span></p>
-              </div>
-              {errors.consent && <p className='error-text'>{errors.consent}</p>}
-            </div>
-
-            {/* Submit Button */}
-            <div>
-              <button className='btn' type="submit">Submit</button>
-            </div>
-          </div>
           </div>
         </form>
       </div>

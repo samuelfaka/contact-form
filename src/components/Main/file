@@ -1,0 +1,95 @@
+const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    queryType: '',
+    message: '',
+    consent: false,
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Function to validate the form before submission
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.firstName) {
+      newErrors.firstName = 'This field is required';
+    }
+
+    if (!formData.lastName) {
+      newErrors.lastName = 'This field is required';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      newErrors.email = 'Please enter a valid email address';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.queryType) {
+      newErrors.queryType = 'Please select a Query type';
+    }
+
+    if (!formData.message) {
+      newErrors.message = 'This field is required';
+    }
+
+    if (!formData.consent) {
+      newErrors.consent = 'To submit this, please consent to being contacted';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
+  const sendEmail = () => {
+    console.log("Attempting to send email with the following data:", formData);
+  
+    window.Email.send({
+      Host: "smtp.gmail.com", // Replace with your SMTP host
+      Username: "aiyelabolashina730@gmail.com", // Replace with your SMTP username
+      Password: "your-password", // Replace with your SMTP password
+      To: formData.email, // Send email to the user who filled out the form
+      From: formData.email, // Send the email from the user's email address
+      Subject: "Form Submission Successful",
+      Body: `
+        <h2>Form Submission Details</h2>
+        <p><strong>First Name:</strong> ${formData.firstName}</p>
+        <p><strong>Last Name:</strong> ${formData.lastName}</p>
+        <p><strong>Email:</strong> ${formData.email}</p>
+        <p><strong>Query Type:</strong> ${formData.queryType}</p>
+        <p><strong>Message:</strong> ${formData.message}</p>
+      `,
+    }).then(
+      message => {
+        console.log("Mail sent successfully: ", message);
+        alert("Mail sent successfully: " + message);
+      }
+    ).catch(
+      error => {
+        console.error("Failed to send email: ", error);
+        alert("Failed to send email: " + error);
+      }
+    );
+  };
+    // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      sendEmail();
+      setIsSubmitted(true); // Set form as submitted
+    }
+  };
+
+  // Handle input changes and clear errors
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };

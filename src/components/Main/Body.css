@@ -97,12 +97,24 @@
 .success-notification {
     color: green;
     margin-top: 10px;
+    position: absolute;
+    font-size: 15px;
   }
   
   .error-notification {
     color: red;
     margin-top: 10px;
+    position: absolute;
+    font-size: 15px;
   }
+
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    position: absolute;
+  }
+  
 
 .many {
     display: flex;

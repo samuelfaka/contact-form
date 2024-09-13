@@ -94,6 +94,15 @@
         width: 60vw;
     }
 }
+.success-notification {
+    color: green;
+    margin-top: 10px;
+  }
+  
+  .error-notification {
+    color: red;
+    margin-top: 10px;
+  }
 
 .many {
     display: flex;
@@ -115,7 +124,7 @@
     width: 460px;
     height: 100vh;
     border-radius: 20px;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(1px);
     overflow: hidden;
     @media (max-width: 767px) {
         border: none;
@@ -156,7 +165,7 @@
 }
 
 section {
-    background: url("../../assets/images/green.jpg");
+    background: url("../../assets/images/fire.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

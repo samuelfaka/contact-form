@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import './Body.css';
 
 const Body = () => {
   const form = useRef();
+  const [messageStatus, setMessageStatus] = useState(null);
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -13,12 +14,14 @@ const Body = () => {
       .then(
         (result) => {
           console.log(result.text);
+          setMessageStatus('success');
         },
         (error) => {
           console.log(error.text);
-        },
+          setMessageStatus('error');
+        }
       );
-    form.current.reset();  // Reset the form after submission
+    form.current.reset();
   };
 
   return (
@@ -120,6 +123,18 @@ const Body = () => {
               <div>
                 <button className='btn' type="submit">Submit</button>
               </div>
+
+              {/* Notification Messages */}
+              {messageStatus === 'success' && (
+                <div className="success-notification">
+                  <p>Your message has been sent successfully!</p>
+                </div>
+              )}
+              {messageStatus === 'error' && (
+                <div className="error-notification">
+                  <p>There was an error sending your message. Please try again later.</p>
+                </div>
+              )}
             </div>
           </div>
         </form>
